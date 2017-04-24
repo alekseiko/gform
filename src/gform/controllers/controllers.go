@@ -1,6 +1,7 @@
 package controllers
 
 import (
+    "net/http"
 	"github.com/corneldamian/httpway"
     "gopkg.in/mgo.v2"
 )

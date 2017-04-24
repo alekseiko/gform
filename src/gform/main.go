@@ -1,4 +1,4 @@
-package main
+package gform
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ import (
 
 func main() {
     var server *httpway.Server
-    session, err := mgo.Dial(env(DB_CONNECTION,"localhost")) // mongodb://<dbuser>:<dbpassword>@ds115671.mlab.com:15671
+    session, err := mgo.Dial(env("DB_CONNECTION","localhost")) // mongodb://<dbuser>:<dbpassword>@ds115671.mlab.com:15671
     if err != nil {
         panic(err)
     }
@@ -27,11 +27,11 @@ func main() {
     landing := router.Middleware(httpwaymid.TemplateRenderer(env("TEMPLATE_DIR", "templates"), "tmpl", "vars", "status"))
 
 	landing.GET("/", controllers.Index)
-    landing.POST("/", controllers.StoreForm("1"))
+    landing.POST("/", controllers.StoreForm(session))
 
-    router.GET("/f/:id", controllers.FormHandler("1"))
-    router.POST("/f/:id", controllers.FormHandler("1"))
-    router.PUT("/f/:id", controllers.FormHandler("1"))
+    router.GET("/f/:id", controllers.FormHandler(session))
+    router.POST("/f/:id", controllers.FormHandler(session))
+    router.PUT("/f/:id", controllers.FormHandler(session))
 
 	server = httpway.NewServer(nil)
 	server.Addr = fmt.Sprintf(":%s", env("SERVER_PORT", "8080"))
