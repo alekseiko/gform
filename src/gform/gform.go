@@ -1,4 +1,4 @@
-package gform
+package main
 
 import (
 	"fmt"
