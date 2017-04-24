@@ -5,8 +5,8 @@ import (
 	"time"
     "os"
 
-	"gopkg.in/corneldamian/httpwaymid.v0"
-	"gopkg.in/corneldamian/httpway.v0"
+	"github.com/corneldamian/httpwaymid"
+	"github.com/corneldamian/httpway"
     "gopkg.in/mgo.v2"
     "gform/controllers"
 )
