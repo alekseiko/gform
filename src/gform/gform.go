@@ -9,6 +9,7 @@ import (
 	"github.com/corneldamian/httpway"
     "gopkg.in/mgo.v2"
     "gform/controllers"
+    "gform/models"
 )
 
 
@@ -21,17 +22,19 @@ func main() {
     defer session.Close()
 
     session.SetMode(mgo.Monotonic, true)
+    var storage = &models.MongoStorage{session}
+
 
 	router := httpway.New()
 
     landing := router.Middleware(httpwaymid.TemplateRenderer(env("TEMPLATE_DIR", "templates"), "tmpl", "vars", "status"))
 
 	landing.GET("/", controllers.Index)
-    landing.POST("/", controllers.StoreForm(session))
+    landing.POST("/", controllers.StoreForm(storage))
 
-    router.GET("/f/:id", controllers.FormHandler(session))
-    router.POST("/f/:id", controllers.FormHandler(session))
-    router.PUT("/f/:id", controllers.FormHandler(session))
+    router.GET("/f/:id", controllers.FormHandler(storage))
+    router.POST("/f/:id", controllers.FormHandler(storage))
+    router.PUT("/f/:id", controllers.FormHandler(storage))
 
 	server = httpway.NewServer(nil)
 	server.Addr = fmt.Sprintf(":%s", env("SERVER_PORT", "8080"))

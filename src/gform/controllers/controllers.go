@@ -3,7 +3,7 @@ package controllers
 import (
     "net/http"
 	"github.com/corneldamian/httpway"
-    "gopkg.in/mgo.v2"
+    "gform/models"
 )
 
 
@@ -14,12 +14,12 @@ func Index(w http.ResponseWriter, r *http.Request) {
     ctx.Set("status", 200)
 }
 
-func StoreForm(session *mgo.Session) httpway.Handler {
+func StoreForm(s models.Storage) httpway.Handler {
     return func(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func FormHandler(session *mgo.Session) httpway.Handler {
+func FormHandler(s models.Storage) httpway.Handler {
     return func(w http.ResponseWriter, r *http.Request) {
     }
 }
